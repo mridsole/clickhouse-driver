@@ -138,18 +138,32 @@ class Decimal128Column(DecimalColumn):
 
 
 def create_decimal_column(spec, column_options):
-    precision, scale = spec[8:-1].split(',')
-    precision, scale = int(precision), int(scale)
-
     # Maximum precisions for underlying types are:
     # Int32    9
     # Int64   18
     # Int128  38
-    if precision <= 9:
+
+    if spec.startswith('Decimal32'):
         cls = Decimal32Column
-    elif precision <= 18:
+        precision = 9
+        scale = int(spec[10:-1])
+    elif spec.startswith('Decimal64'):
         cls = Decimal64Column
-    else:
+        precision = 18
+        scale = int(spec[10:-1])
+    elif spec.startswith('Decimal128'):
         cls = Decimal128Column
+        precision = 38
+        scale = int(spec[11:-1])
+    else:
+        precision, scale = spec[8:-1].split(',')
+        precision, scale = int(precision), int(scale)
+
+        if precision <= 9:
+            cls = Decimal32Column
+        elif precision <= 18:
+            cls = Decimal64Column
+        else:
+            cls = Decimal128Column
 
     return cls(precision, scale, **column_options)
