@@ -2,10 +2,10 @@ from enum import Enum
 
 from .. import errors
 from ..util import compat
-from .intcolumn import IntColumn
+from .intcolumn import IntColumnBase
 
 
-class EnumColumn(IntColumn):
+class EnumColumn(IntColumnBase):
     py_types = (Enum, ) + compat.integer_types + compat.string_types
 
     def __init__(self, enum_cls, **kwargs):

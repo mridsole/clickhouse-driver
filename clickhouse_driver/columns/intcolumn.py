@@ -4,12 +4,12 @@ from .exceptions import ColumnTypeMismatchException
 from .base import FormatColumn
 
 
-class IntColumn(FormatColumn):
+class IntColumnBase(FormatColumn):
     py_types = compat.integer_types
     int_size = None
 
     def __init__(self, types_check=False, **kwargs):
-        super(IntColumn, self).__init__(types_check=types_check, **kwargs)
+        super(IntColumnBase, self).__init__(types_check=types_check, **kwargs)
 
         if types_check:
             self.mask = (1 << 8 * self.int_size) - 1
@@ -36,7 +36,7 @@ class IntColumn(FormatColumn):
             self.before_write_items = before_write_items
 
 
-class UIntColumn(IntColumn):
+class UIntColumn(IntColumnBase):
     def __init__(self, types_check=False, **kwargs):
         super(UIntColumn, self).__init__(types_check=types_check, **kwargs)
 
@@ -48,25 +48,29 @@ class UIntColumn(IntColumn):
             self.check_item = check_item
 
 
-class Int8Column(IntColumn):
+class Int8Column(IntColumnBase):
     ch_type = 'Int8'
     format = 'b'
     int_size = 1
 
 
-class Int16Column(IntColumn):
+class Int16Column(IntColumnBase):
     ch_type = 'Int16'
     format = 'h'
     int_size = 2
 
 
-class Int32Column(IntColumn):
+class Int32Column(IntColumnBase):
     ch_type = 'Int32'
     format = 'i'
     int_size = 4
 
 
-class Int64Column(IntColumn):
+class IntColumn(Int32Column):
+    ch_type = 'Int'
+
+
+class Int64Column(IntColumnBase):
     ch_type = 'Int64'
     format = 'q'
     int_size = 8

@@ -5,9 +5,9 @@ from .datetimecolumn import create_datetime_column
 from .decimalcolumn import create_decimal_column
 from . import exceptions as column_exceptions
 from .enumcolumn import create_enum_column
-from .floatcolumn import Float32, Float64
+from .floatcolumn import Float32, Float64, Float
 from .intcolumn import (
-    Int8Column, Int16Column, Int32Column, Int64Column,
+    Int8Column, Int16Column, Int32Column, Int64Column, IntColumn,
     UInt8Column, UInt16Column, UInt32Column, UInt64Column
 )
 from .lowcardinalitycolumn import create_low_cardinality_column
@@ -28,8 +28,8 @@ from .ipcolumn import IPv4Column, IPv6Column
 
 
 column_by_type = {c.ch_type: c for c in [
-    DateColumn, Float32, Float64,
-    Int8Column, Int16Column, Int32Column, Int64Column,
+    DateColumn, Float32, Float64, Float,
+    Int8Column, Int16Column, Int32Column, Int64Column, IntColumn,
     UInt8Column, UInt16Column, UInt32Column, UInt64Column,
     NothingColumn, NullColumn, UUIDColumn,
     IntervalYearColumn, IntervalMonthColumn, IntervalWeekColumn,

@@ -33,3 +33,7 @@ class Float32(FloatColumn):
 class Float64(FloatColumn):
     ch_type = 'Float64'
     format = 'd'
+
+
+class Float(Float32):
+    ch_type = 'Float'
